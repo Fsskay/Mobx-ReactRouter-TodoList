@@ -19,7 +19,7 @@ class Todo {
 
 class TodoStore {
     @observable todos = []
-
+    @observable searchedTodos = []
 
     @action
     addTodo = title => {
@@ -30,8 +30,15 @@ class TodoStore {
     @action
     deleteTodo = id => {
         const deleteTodoID = id ;
-
         this.todos = this.todos.filter(todo=>todo.id !== deleteTodoID)
+        this.searchedTodos = this.searchedTodos.filter(todo=>todo.id !== deleteTodoID)
+    }
+
+    @action
+    searchTodo = searchedTitle => {
+        const inputTitle =  searchedTitle;
+        this.searchedTodos = this.todos.filter(todo=>todo.title == inputTitle)
+        console.log(this.searchedTodos,'这里是store中action.searchTodo里的this.searchedTodos')
     }
 
 }

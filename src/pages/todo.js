@@ -21,6 +21,8 @@ class TodoList extends React.Component {
     }
 
 
+
+
     AddTodo = (inputValue) => {
         this.props.store.addTodo(inputValue)
         console.log(this.props.store.todos)
@@ -33,6 +35,14 @@ class TodoList extends React.Component {
         this.setState({})
     }
 
+    SearchTodo = (inputValue) => {
+        this.props.store.searchTodo(inputValue)
+        console.log(this.props.store.todos)
+        this.setState({})
+    }
+
+
+
 
     handleShowAll = () => {
         this.setState({tabView: SHOW_ALL})
@@ -44,8 +54,12 @@ class TodoList extends React.Component {
         this.setState({tabView: SHOW_UNFINISHED})
     }
 
+
+
+
     render() {
         let input
+        let input2
         const {tabView} = this.state
         return (
             <React.Fragment>
@@ -64,7 +78,7 @@ class TodoList extends React.Component {
                             //回调refs
                         />
                         <button type="submit">
-                            Add Todo
+                            添加 Todo
                         </button>
                     </form>
                     <button onClick={this.handleShowAll}>显示全部</button>
@@ -75,7 +89,7 @@ class TodoList extends React.Component {
 
                 {tabView === SHOW_ALL &&
                 <div>
-                    所有的todo有:
+                    所有的todo:
                     {this.props.store.todos.map((todo) => {
                         return (
                             <ul id={todo.id}>
@@ -105,7 +119,7 @@ class TodoList extends React.Component {
                 {tabView === SHOW_FINISHED &&
                 <div>
 
-                    已完成的todo有:
+                    已完成的todo:
                     {this.props.store.todos.filter((todo) => todo.finished === true).map((todo) => {
                         return (
                             <ul key={todo.id}>
@@ -126,7 +140,7 @@ class TodoList extends React.Component {
 
                 {tabView === SHOW_UNFINISHED &&
                 <div>
-                    未完成的todo有:
+                    未完成的todo:
                     {this.props.store.todos.filter((todo) => todo.finished === false).map((todo) => {
                         return (
                             <ul key={todo.id}>
@@ -144,6 +158,51 @@ class TodoList extends React.Component {
                 </div>
                 }
 
+                <div>
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        if (!input2.value.trim()) {
+                            return
+                        }
+                        //只是防止输入空白的
+                        console.log('input2', input2.value)
+                        this.SearchTodo(input2.value)
+                        input2.value = ''
+                    }}>
+                        <input ref={node => input2 = node}
+                            //回调refs
+                        />
+                        <button type="submit">
+                            搜索 Todo
+                        </button>
+                        <button>刷新搜索结果</button>
+                    </form>
+
+                    <ul>以下是todo的搜索结果</ul>
+                    {this.props.store.searchedTodos.length === 0?<div>暂无搜索结果</div>:this.props.store.searchedTodos.map((todo) => {
+                        return (
+                            <ul id={todo.id}>
+                                <li>{todo.title}</li>
+                                <li>{todo.finished === false ? '未完成' : '已完成'}</li>
+                                <button onClick={(event) => {
+                                    event.preventDefault();
+                                    todo.finished = !todo.finished;
+                                    this.setState({})
+                                }}>切换
+                                </button>
+                                <button id={todo.id} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.DeleteTodo(todo.id)
+                                }}
+                                >删除
+                                </button>
+                            </ul>
+                        )
+                    })}
+                    {}
+
+
+                </div>
 
             </React.Fragment>
 
