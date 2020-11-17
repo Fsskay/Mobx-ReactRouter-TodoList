@@ -60,6 +60,7 @@ class TodoList extends React.Component {
     render() {
         let input
         let input2
+        let input3
         const {tabView} = this.state
         return (
             <React.Fragment>
@@ -109,6 +110,7 @@ class TodoList extends React.Component {
                                 >删除
                                 </button>
 
+
                             </ul>
                         )
                     })}
@@ -131,6 +133,13 @@ class TodoList extends React.Component {
                                     this.setState({})
                                 }}>切换
                                 </button>
+
+                                <button id={todo.id} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.DeleteTodo(todo.id)
+                                }}
+                                >删除
+                                </button>
                             </ul>
                         )
                     })}
@@ -151,6 +160,12 @@ class TodoList extends React.Component {
                                     todo.finished = !todo.finished;
                                     this.setState({})
                                 }}>切换
+                                </button>
+                                <button id={todo.id} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.DeleteTodo(todo.id)
+                                }}
+                                >删除
                                 </button>
                             </ul>
                         )
@@ -175,7 +190,6 @@ class TodoList extends React.Component {
                         <button type="submit">
                             搜索 Todo
                         </button>
-                        <button>刷新搜索结果</button>
                     </form>
 
                     <ul>以下是todo的搜索结果</ul>
@@ -184,12 +198,14 @@ class TodoList extends React.Component {
                             <ul id={todo.id}>
                                 <li>{todo.title}</li>
                                 <li>{todo.finished === false ? '未完成' : '已完成'}</li>
+
                                 <button onClick={(event) => {
                                     event.preventDefault();
                                     todo.finished = !todo.finished;
                                     this.setState({})
                                 }}>切换
                                 </button>
+
                                 <button id={todo.id} onClick={(e) => {
                                     e.preventDefault();
                                     this.DeleteTodo(todo.id)
@@ -199,7 +215,7 @@ class TodoList extends React.Component {
                             </ul>
                         )
                     })}
-                    {}
+
 
 
                 </div>
