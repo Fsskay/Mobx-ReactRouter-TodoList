@@ -9,7 +9,6 @@ class Todo {
     // todo 的 title 及完成状态 finished 是可被观察及更新的，同时 finished 的初始状态为 false
     @observable title;
     @observable finished = false;
-
     // 构造函数接收tile
     constructor(title) {
         this.title = title;

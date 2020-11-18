@@ -41,6 +41,12 @@ class TodoList extends React.Component {
         this.setState({})
     }
 
+    ToggleTodo = (todo) =>{
+        todo.finished = !todo.finished;
+        this.setState({})
+    }
+
+
 
     handleShowAll = () => {
         this.setState({tabView: SHOW_ALL})
@@ -61,13 +67,10 @@ class TodoList extends React.Component {
         let input2
         const {tabView} = this.state
         const Alltodo = this.props.store.todos
+        const AllsearchedTodos =  this.props.store.searchedTodos
         return (
             <React.Fragment>
                 <div>
-
-
-
-
                     <form onSubmit={(e) => {
                         e.preventDefault()
                         if (!input.value.trim()) {return}
@@ -90,10 +93,10 @@ class TodoList extends React.Component {
                             <ul id={todo.id}>
                                 <li>{todo.title}</li>
                                 <li>{todo.finished === false ? '未完成' : '已完成'}</li>
+
                                 <button onClick={(event) => {
                                     event.preventDefault();
-                                    todo.finished = !todo.finished;
-                                    this.setState({})
+                                    this.ToggleTodo(todo)
                                 }}>切换
                                 </button>
 
@@ -119,17 +122,16 @@ class TodoList extends React.Component {
 
                 {tabView === SHOW_FINISHED &&
                 <div>
-
                     已完成的todo <div>未完成任务数为({this.props.store.FinishedCount}):</div>
                     {Alltodo.filter((todo) => todo.finished === true).map((todo) => {
                         return (
                             <ul key={todo.id}>
                                 <li>{todo.title}</li>
                                 <li>{todo.finished === false ? '未完成' : '已完成'}</li>
+
                                 <button onClick={(event) => {
                                     event.preventDefault();
-                                    todo.finished = !todo.finished;
-                                    this.setState({})
+                                    this.ToggleTodo(todo)
                                 }}>切换
                                 </button>
 
@@ -141,14 +143,13 @@ class TodoList extends React.Component {
                                 </button>
 
                                 <button onClick={(event)=>{
-                                    event.preventDefault()
+                                    event.preventDefault();
                                     this.EditTodo(todo)
                                 }}>编辑</button>
                             </ul>
                         )
                     })}
                 </div>
-
                 }
 
                 {tabView === SHOW_UNFINISHED &&
@@ -162,8 +163,7 @@ class TodoList extends React.Component {
 
                                 <button onClick={(event) => {
                                     event.preventDefault();
-                                    todo.finished = !todo.finished;
-                                    this.setState({})
+                                    this.ToggleTodo(todo)
                                 }}>切换
                                 </button>
 
@@ -188,20 +188,17 @@ class TodoList extends React.Component {
                     <form onSubmit={(e) => {
                         e.preventDefault()
                         if (!input2.value.trim()) {return}
-                        //只是防止输入空白的
                         this.SearchTodo(input2.value)
                         input2.value = ''
                     }}>
-                        <input ref={node => input2 = node}
-                            //回调refs
-                        />
+                        <input ref={node => input2 = node}/>
                         <button type="submit">
                             搜索 Todo
                         </button>
                     </form>
 
                     <div>以下是todo的搜索结果 ({this.props.store.searchedTodos.length})</div>
-                    {this.props.store.searchedTodos.length === 0?<div>暂无搜索结果</div>:this.props.store.searchedTodos.map((todo) => {
+                    {AllsearchedTodos.length === 0?<div>暂无搜索结果</div>:this.props.store.searchedTodos.map((todo) => {
                         return (
                             <ul id={todo.id}>
                                 <li>{todo.title}</li>
@@ -209,8 +206,7 @@ class TodoList extends React.Component {
 
                                 <button onClick={(event) => {
                                     event.preventDefault();
-                                    todo.finished = !todo.finished;
-                                    this.setState({})
+                                    this.ToggleTodo(todo)
                                 }}>切换
                                 </button>
 
