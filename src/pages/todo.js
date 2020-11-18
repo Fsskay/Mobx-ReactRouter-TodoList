@@ -22,6 +22,8 @@ class TodoList extends React.Component {
     }
 
 
+
+
     AddTodo = (inputValue) => {
         this.props.store.addTodo(inputValue)
         this.setState({})
@@ -48,6 +50,8 @@ class TodoList extends React.Component {
     }
 
 
+
+
     handleShowAll = () => {
         this.setState({tabView: SHOW_ALL})
     }
@@ -60,14 +64,17 @@ class TodoList extends React.Component {
 
 
     render() {
-
         let input
         let input2
         const {tabView} = this.state
         const AllTodo = this.props.store.todos
+        const AllFinishedTodo = AllTodo.filter((todo) => todo.finished === false)
+        const AllUnFinishedTodo = AllTodo.filter((todo) => todo.finished ===true )
         const AllSearchedTodos = this.props.store.searchedTodos
         return (
             <React.Fragment>
+
+
                 <div>
                     <form onSubmit={(e) => {
                         e.preventDefault()
@@ -96,15 +103,15 @@ class TodoList extends React.Component {
 
                 {tabView === SHOW_FINISHED &&
                 <div>
-                    已完成的todo <div>未完成任务数为({this.props.store.FinishedCount}):</div>
-                    <TodoBox todos={AllTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
+                    已完成的todo <div>完成任务数为({this.props.store.FinishedCount}):</div>
+                    <TodoBox todos={AllUnFinishedTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
                 </div>
                 }
 
                 {tabView === SHOW_UNFINISHED &&
                 <div>
-                    未完成的todo <div>已完成任务数为({this.props.store.UnFinishedCount}):</div>
-                    <TodoBox todos={AllTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
+                    未完成的todo <div>未完成任务数为({this.props.store.UnFinishedCount}):</div>
+                    <TodoBox todos={AllFinishedTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
                 </div>
                 }
 
@@ -133,6 +140,8 @@ class TodoList extends React.Component {
                     </div>
                     }
                 </div>
+
+
 
             </React.Fragment>
 
