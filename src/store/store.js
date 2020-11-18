@@ -21,6 +21,19 @@ class TodoStore {
     @observable todos = []
     @observable searchedTodos = []
 
+    @computed get AllTodosCount(){
+        return this.todos.length
+    }
+
+    @computed get FinishedCount(){
+        return this.todos.filter((todo) => todo.finished === false).length
+    }
+
+    @computed get UnFinishedCount(){
+        return this.todos.filter((todo) => todo.finished === true).length
+    }
+
+
     @action
     addTodo = title => {
         if (!title) return;
