@@ -21,8 +21,6 @@ class TodoList extends React.Component {
     }
 
 
-
-
     AddTodo = (inputValue) => {
         this.props.store.addTodo(inputValue)
         console.log(this.props.store.todos)
@@ -41,7 +39,10 @@ class TodoList extends React.Component {
         this.setState({})
     }
 
-
+    // onRename = () => {
+    //     todo.title = prompt('Todo标题', todo.title) || todo.title;
+    //     this.setState({})
+    // }
 
 
     handleShowAll = () => {
@@ -110,6 +111,12 @@ class TodoList extends React.Component {
                                 >删除
                                 </button>
 
+                                <button onClick={(event)=>{
+                                    event.preventDefault()
+                                    todo.title = prompt('Todo标题', todo.title) || todo.title;
+                                    this.setState({})
+                                }}>编辑</button>
+
 
                             </ul>
                         )
@@ -140,6 +147,12 @@ class TodoList extends React.Component {
                                 }}
                                 >删除
                                 </button>
+
+                                <button onClick={(event)=>{
+                                    event.preventDefault()
+                                    todo.title = prompt('Todo标题', todo.title) || todo.title;
+                                    this.setState({})
+                                }}>编辑</button>
                             </ul>
                         )
                     })}
@@ -167,6 +180,12 @@ class TodoList extends React.Component {
                                 }}
                                 >删除
                                 </button>
+
+                                <button onClick={(event)=>{
+                                    event.preventDefault()
+                                    todo.title = prompt('Todo标题', todo.title) || todo.title;
+                                    this.setState({})
+                                }}>编辑</button>
                             </ul>
                         )
                     })}
@@ -212,6 +231,12 @@ class TodoList extends React.Component {
                                 }}
                                 >删除
                                 </button>
+
+                                <button onClick={(event)=>{
+                                    event.preventDefault()
+                                    todo.title = prompt('Todo标题', todo.title) || todo.title;
+                                    this.setState({})
+                                }}>编辑</button>
                             </ul>
                         )
                     })}
