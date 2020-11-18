@@ -1,5 +1,6 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react';
+import TodoBox from "./TodoBox";
 //由于provider的原因,所以不需要import store了,直接@inject注入store数据,使用@observer观察,this.prop.store取得
 
 const tabsText = [SHOW_ALL, SHOW_FINISHED, SHOW_UNFINISHED]
@@ -41,11 +42,10 @@ class TodoList extends React.Component {
         this.setState({})
     }
 
-    ToggleTodo = (todo) =>{
+    ToggleTodo = (todo) => {
         todo.finished = !todo.finished;
         this.setState({})
     }
-
 
 
     handleShowAll = () => {
@@ -59,21 +59,21 @@ class TodoList extends React.Component {
     }
 
 
-
-
     render() {
 
         let input
         let input2
         const {tabView} = this.state
-        const Alltodo = this.props.store.todos
-        const AllsearchedTodos =  this.props.store.searchedTodos
+        const AllTodo = this.props.store.todos
+        const AllSearchedTodos = this.props.store.searchedTodos
         return (
             <React.Fragment>
                 <div>
                     <form onSubmit={(e) => {
                         e.preventDefault()
-                        if (!input.value.trim()) {return}
+                        if (!input.value.trim()) {
+                            return
+                        }
                         this.AddTodo(input.value)
                         input.value = ''
                     }}>
@@ -85,109 +85,38 @@ class TodoList extends React.Component {
                     <button onClick={this.handleShowUnFinished}>显示未完成</button>
                 </div>
 
+
+
                 {tabView === SHOW_ALL &&
                 <div>
                     所有的todo <div>全部任务数为({this.props.store.AllTodosCount}):</div>
-                    {Alltodo.map((todo) => {
-                        return (
-                            <ul id={todo.id}>
-                                <li>{todo.title}</li>
-                                <li>{todo.finished === false ? '未完成' : '已完成'}</li>
-
-                                <button onClick={(event) => {
-                                    event.preventDefault();
-                                    this.ToggleTodo(todo)
-                                }}>切换
-                                </button>
-
-                                <button id={todo.id} onClick={(e) => {
-                                    e.preventDefault();
-                                    this.DeleteTodo(todo.id)
-                                }}
-                                >删除
-                                </button>
-
-                                <button onClick={(event)=>{
-                                    event.preventDefault()
-                                    this.EditTodo(todo)
-                                }}>编辑</button>
-
-
-                            </ul>
-                        )
-                    })}
+                    <TodoBox todos={AllTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
                 </div>
                 }
-
 
                 {tabView === SHOW_FINISHED &&
                 <div>
                     已完成的todo <div>未完成任务数为({this.props.store.FinishedCount}):</div>
-                    {Alltodo.filter((todo) => todo.finished === true).map((todo) => {
-                        return (
-                            <ul key={todo.id}>
-                                <li>{todo.title}</li>
-                                <li>{todo.finished === false ? '未完成' : '已完成'}</li>
-
-                                <button onClick={(event) => {
-                                    event.preventDefault();
-                                    this.ToggleTodo(todo)
-                                }}>切换
-                                </button>
-
-                                <button id={todo.id} onClick={(e) => {
-                                    e.preventDefault();
-                                    this.DeleteTodo(todo.id)
-                                }}
-                                >删除
-                                </button>
-
-                                <button onClick={(event)=>{
-                                    event.preventDefault();
-                                    this.EditTodo(todo)
-                                }}>编辑</button>
-                            </ul>
-                        )
-                    })}
+                    <TodoBox todos={AllTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
                 </div>
                 }
 
                 {tabView === SHOW_UNFINISHED &&
                 <div>
                     未完成的todo <div>已完成任务数为({this.props.store.UnFinishedCount}):</div>
-                    {Alltodo.filter((todo) => todo.finished === false).map((todo) => {
-                        return (
-                            <ul key={todo.id}>
-                                <li>{todo.title}</li>
-                                <li>{todo.finished === false ? '未完成' : '已完成'}</li>
-
-                                <button onClick={(event) => {
-                                    event.preventDefault();
-                                    this.ToggleTodo(todo)
-                                }}>切换
-                                </button>
-
-                                <button id={todo.id} onClick={(e) => {
-                                    e.preventDefault();
-                                    this.DeleteTodo(todo.id)
-                                }}
-                                >删除
-                                </button>
-
-                                <button onClick={(event)=>{
-                                    event.preventDefault()
-                                    this.EditTodo(todo)
-                                }}>编辑</button>
-                            </ul>
-                        )
-                    })}
+                    <TodoBox todos={AllTodo} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
                 </div>
                 }
+
+
+
 
                 <div>
                     <form onSubmit={(e) => {
                         e.preventDefault()
-                        if (!input2.value.trim()) {return}
+                        if (!input2.value.trim()) {
+                            return
+                        }
                         this.SearchTodo(input2.value)
                         input2.value = ''
                     }}>
@@ -197,36 +126,12 @@ class TodoList extends React.Component {
                         </button>
                     </form>
 
-                    <div>以下是todo的搜索结果 ({this.props.store.searchedTodos.length})</div>
-                    {AllsearchedTodos.length === 0?<div>暂无搜索结果</div>:this.props.store.searchedTodos.map((todo) => {
-                        return (
-                            <ul id={todo.id}>
-                                <li>{todo.title}</li>
-                                <li>{todo.finished === false ? '未完成' : '已完成'}</li>
+                    <div>以下是todo的搜索结果 ({AllSearchedTodos.length})</div>
 
-                                <button onClick={(event) => {
-                                    event.preventDefault();
-                                    this.ToggleTodo(todo)
-                                }}>切换
-                                </button>
-
-                                <button id={todo.id} onClick={(e) => {
-                                    e.preventDefault();
-                                    this.DeleteTodo(todo.id)
-                                }}
-                                >删除
-                                </button>
-
-                                <button onClick={(event)=>{
-                                    event.preventDefault()
-                                    this.EditTodo(todo)
-                                }}>编辑</button>
-                            </ul>
-                        )
-                    })}
-
-
-
+                    {AllSearchedTodos.length === 0 ? <div>暂无搜索结果</div> : <div>
+                        <TodoBox todos={AllSearchedTodos} deleteTodo={this.DeleteTodo} editTodo={this.EditTodo} toggleTodo={this.ToggleTodo}/>
+                    </div>
+                    }
                 </div>
 
             </React.Fragment>
