@@ -1,3 +1,12 @@
+使用mobx与react-router-dom制作的todoList
+有基本的增删改查
+有根据todo的完成情况分类筛选
+有独立页面的搜索结果页面(router)
+
+
+
+---------------------------------------------------------分割线----------------------------------------------------------------------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
