@@ -8,10 +8,6 @@ import {withRouter} from 'react-router-dom'
 
 
 class SearchResult extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
     DeleteTodo = (id) => {
         this.props.store.deleteTodo(id)
         this.setState({})
@@ -24,10 +20,11 @@ class SearchResult extends React.Component{
         todo.finished = !todo.finished;
         this.setState({})
     }
-
     BackToTodo=()=>{
         this.props.history.push('/')
     }
+
+
     render() {
 
         const AllSearchedTodos = this.props.store.searchedTodos
