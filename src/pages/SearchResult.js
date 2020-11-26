@@ -32,8 +32,6 @@ class SearchResult extends React.Component{
 
             <React.Fragment>
                 <div>以下是todo的搜索结果 ({AllSearchedTodos.length})</div>
-
-
                 {
                     AllSearchedTodos.length === 0 ?
                         <div>暂无搜索结果</div> :

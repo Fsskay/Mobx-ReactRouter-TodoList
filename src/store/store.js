@@ -25,12 +25,14 @@ class TodoStore {
     }
 
     @computed get FinishedCount(){
-        return this.todos.filter((todo) => todo.finished === false).length
+        return this.todos.filter((todo) => todo.finished === true).length
     }
 
     @computed get UnFinishedCount(){
-        return this.todos.filter((todo) => todo.finished === true).length
+        return this.todos.filter((todo) => todo.finished === false).length
     }
+
+
 
 
     @action

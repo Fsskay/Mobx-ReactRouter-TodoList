@@ -31,5 +31,4 @@ const TodoBox = ({todos,toggleTodo,deleteTodo,editTodo}) => (
         }
     </ul>
 )
-
 export default TodoBox
